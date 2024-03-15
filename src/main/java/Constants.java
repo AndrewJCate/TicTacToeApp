@@ -7,7 +7,8 @@ public class Constants {
     public static final String GOODBYE_MESSAGE = "\nThanks for playing, goodbye!";
     public static final String INSTRUCTIONS = "\nOn your turn, enter a number from the board to place" +
             " your mark in that position.\n";
-    public static final String KEEP_PLAYING_PROMPT = "\nDo you want to keep playing? ('Yes' or 'y' to continue): ";
+    public static final String KEEP_PLAYING_PROMPT = "\nDo you want to keep playing? (enter 'yes' or 'y' to continue)" +
+            ": ";
     public static final String MARK_ERROR = "\nPlease choose a different character.";
     public static final String OPPONENT_MARK_PROMPT = "\nEnter the character you would like me to use for my marks: ";
     public static final String PLAYER_MARK_PROMPT = "\nEnter the character you would like to use for your marks: ";

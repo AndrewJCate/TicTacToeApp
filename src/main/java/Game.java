@@ -23,32 +23,24 @@ public class Game {
          7 | 8 | 9
      */
 
-    // TODO implement BOARD_WIDTH
-
-    private final char[] GAME_BOARD;
-
     private final char AI_MARK;
-    private final char PLAYER_MARK;
     private final char AVAILABLE_POSITION_MARK = ' ';
-
-    private char currentMark;
-    private char winner;
+    private final char[] GAME_BOARD;
+    private final char PLAYER_MARK;
+    private char currentPlayerMark;
     private boolean isBoardFilled = false;
     private boolean isWinner = false;
+    private char winnerMark;
 
     public Game(char playerMark, char aiMark) {
 
-        this.PLAYER_MARK = playerMark;
-        this.AI_MARK = aiMark;
+        PLAYER_MARK = playerMark;
+        AI_MARK = aiMark;
 
-        this.GAME_BOARD = setupBoard();
-        this.setupFirstPlayer();
+        GAME_BOARD = setupNewGameBoard();
+        setWhoGoesFirst();
 
     }
-
-
-
-    public boolean isGameOver() { return this.checkWinner() || this.checkBoardFilled(); }
 
     // Checks if there is a winner
     public boolean checkWinner() {
@@ -57,7 +49,7 @@ public class Game {
 
         for (int i = 0; i < 3; i++) {
 
-            if (isColWinner(i) || isRowWinner(i)) {
+            if (checkForColumnWinner(i) || checkForRowWinner(i)) {
 
                 won = true;
 
@@ -66,13 +58,13 @@ public class Game {
 
         }
 
-        if (isLeftDiagWinner() || isRightDiagWinner()) won = true;
+        if (checkForLeftDiagonalWinner() || checkForRightDiagonalWinner()) won = true;
 
         if (won) {
 
-            this.setWinnerMark();
+            setWinnerMark();
 
-            this.isWinner = true;
+            isWinner = true;
 
         }
 
@@ -83,9 +75,9 @@ public class Game {
 
         List<Integer> availablePositions = new ArrayList<>();
 
-        for (int i = 0; i < this.GAME_BOARD.length; i++) {
+        for (int i = 0; i < GAME_BOARD.length; i++) {
 
-            if (GAME_BOARD[i] == this.AVAILABLE_POSITION_MARK) {
+            if (GAME_BOARD[i] == AVAILABLE_POSITION_MARK) {
                 availablePositions.add(i + 1);  // AI sees choices as players do, from index 1
             }
         }
@@ -93,33 +85,43 @@ public class Game {
         return availablePositions;
     }
 
-    public char getCurrentMark() {
-        return this.currentMark;
+    public char getCurrentPlayerMark() {
+        return currentPlayerMark;
     }
 
-    public boolean getIsBoardFilled() { return this.isBoardFilled; }
+    public boolean getIsBoardFilled() {
+        return isBoardFilled;
+    }
 
-    public boolean getIsWinner() { return this.isWinner; }
+    public boolean getIsWinner() {
+        return isWinner;
+    }
 
     public char getPlayerMark() {
-        return this.PLAYER_MARK;
+        return PLAYER_MARK;
     }
 
-    public char getWinner() { return this.winner; }
+    public char getWinnerMark() {
+        return winnerMark;
+    }
+
+    public boolean checkGameOver() {
+        return checkWinner() || checkForFullBoard();
+    }
 
     // Accepts position player wants to put mark
     // Returns boolean of successful play
     public boolean playTurn(int position) {
 
-        boolean isValid = inRange(position) && !isTaken(position);
+        boolean isValid = checkIfPositionInAcceptableRange(position) && !checkIfPositionIsTaken(position);
 
         if (isValid) {
 
             // User sees indices from 1, not 0
-            GAME_BOARD[position - 1] = this.currentMark;
+            GAME_BOARD[position - 1] = currentPlayerMark;
 
             // Flip turn
-            currentMark = (currentMark == PLAYER_MARK) ? AI_MARK : PLAYER_MARK;
+            currentPlayerMark = (currentPlayerMark == PLAYER_MARK) ? AI_MARK : PLAYER_MARK;
 
             return true;
         }
@@ -157,8 +159,7 @@ public class Game {
 
             if (GAME_BOARD[i - 1] != AVAILABLE_POSITION_MARK) {
                 System.out.print(" " + AVAILABLE_POSITION_MARK);
-            }
-            else {
+            } else {
                 System.out.print(" " + i);
             }
 
@@ -177,37 +178,35 @@ public class Game {
         System.out.println();
     }
 
-
-
-    private boolean inRange(int position) {
+    private boolean checkIfPositionInAcceptableRange(int position) {
         return position > 0 && position < GAME_BOARD.length + 1;
     }
 
-    private boolean checkBoardFilled() {
+    private boolean checkForFullBoard() {
 
         for (char c : GAME_BOARD) if (c == AVAILABLE_POSITION_MARK) return false;
 
-        this.isBoardFilled = true;
+        isBoardFilled = true;
 
         return true;
     }
 
     // Col is 0 indexed
-    private boolean isColWinner(int col) {
+    private boolean checkForColumnWinner(int col) {
 
         if (GAME_BOARD[col] == AVAILABLE_POSITION_MARK) return false;
 
         return GAME_BOARD[col] == GAME_BOARD[col + 3] && GAME_BOARD[col] == GAME_BOARD[col + 6];
     }
 
-    private boolean isLeftDiagWinner() {
+    private boolean checkForLeftDiagonalWinner() {
 
         if (GAME_BOARD[0] == AVAILABLE_POSITION_MARK) return false;
 
         return GAME_BOARD[0] == GAME_BOARD[4] && GAME_BOARD[0] == GAME_BOARD[GAME_BOARD.length - 1];
     }
 
-    private boolean isRightDiagWinner() {
+    private boolean checkForRightDiagonalWinner() {
 
         if (GAME_BOARD[2] == AVAILABLE_POSITION_MARK) return false;
 
@@ -215,7 +214,7 @@ public class Game {
     }
 
     // Row is 0 indexed
-    private boolean isRowWinner(int row) {
+    private boolean checkForRowWinner(int row) {
 
         row = (row + 1) * 3 - 1;
 
@@ -224,12 +223,12 @@ public class Game {
         return GAME_BOARD[row] == GAME_BOARD[row - 1] && GAME_BOARD[row] == GAME_BOARD[row - 2];
     }
 
-    private boolean isTaken(int position) {
+    private boolean checkIfPositionIsTaken(int position) {
         return GAME_BOARD[position - 1] != AVAILABLE_POSITION_MARK;
     }
 
     // Creates a blank game board
-    private char[] setupBoard() {
+    private char[] setupNewGameBoard() {
 
         char[] board = new char[9];
 
@@ -238,25 +237,23 @@ public class Game {
         return board;
     }
 
-    private void setupFirstPlayer() {
+    private void setWhoGoesFirst() {
 
         int randInt = new Random().nextInt(2);
 
         if (randInt == 0) {
-            currentMark = PLAYER_MARK;
-        }
-        else {
-            currentMark = AI_MARK;
+            currentPlayerMark = PLAYER_MARK;
+        } else {
+            currentPlayerMark = AI_MARK;
         }
     }
 
     private void setWinnerMark() {
 
-        if (currentMark == PLAYER_MARK) {
-            this.winner = AI_MARK;
-        }
-        else {
-            this.winner = PLAYER_MARK;
+        if (currentPlayerMark == PLAYER_MARK) {
+            winnerMark = AI_MARK;
+        } else {
+            winnerMark = PLAYER_MARK;
         }
     }
 

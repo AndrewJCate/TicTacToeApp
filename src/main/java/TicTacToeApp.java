@@ -28,10 +28,10 @@ public class TicTacToeApp {
             System.out.println(Constants.BEGIN_MESSAGE);
 
             // Game begin
-            while (!game.isGameOver()) {
+            while (!game.checkGameOver()) {
 
                 // Player turn
-                if (game.getCurrentMark() == game.getPlayerMark()) {
+                if (game.getCurrentPlayerMark() == game.getPlayerMark()) {
 
                     int position = getPlayerTurn(in, game);
 
@@ -49,7 +49,7 @@ public class TicTacToeApp {
                         // Do nothing
                     }
 
-                    int position = ai.playTurn(game);
+                    int position = ai.playTurn(game.getAvailablePositions());
                     game.playTurn(position);
 
                     System.out.printf((Constants.AI_MOVE) + "%n", position);
@@ -68,6 +68,10 @@ public class TicTacToeApp {
         System.out.println(Constants.GOODBYE_MESSAGE);
 
         in.close();
+    }
+
+    private static void gameLoop() {
+
     }
 
     private static char getMark(Scanner in, String prompt) {
@@ -142,7 +146,7 @@ public class TicTacToeApp {
 
         if (game.getIsWinner()) {
 
-            if (game.getWinner() == game.getPlayerMark()) {
+            if (game.getWinnerMark() == game.getPlayerMark()) {
                 System.out.println(Constants.YOU_WIN);
             }
             else {
