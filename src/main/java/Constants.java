@@ -3,6 +3,7 @@ public class Constants {
     public static final String AI_MOVE = "\nI put my mark at %s.";
     public static final String AI_TURN = "\nMy turn.";
     public static final String AI_WIN = "\nGame over! I won!";
+    public static final char AVAILABLE_POSITION_MARK = ' ';
     public static final String BEGIN_MESSAGE = "\nLet's begin.";
     public static final String GOODBYE_MESSAGE = "\nThanks for playing, goodbye!";
     public static final String INSTRUCTIONS = "\nOn your turn, enter a number from the board to place" +
@@ -18,7 +19,7 @@ public class Constants {
     public static final String WELCOME_MESSAGE = """
 
             Welcome to TicTacToe!
-            Your goal in this game is to make an unbroken line of 
+            Your goal in this game is to make an unbroken line of
             your marks from one side of the board to the opposite side.
             Either vertically, horizontally or diagonally will work.
             I will be trying to do the same!
