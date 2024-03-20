@@ -5,7 +5,7 @@ import java.util.List;
 public class GameBoard {
 
     /*
-        Board layout
+        Board index layout for 3x3
 
          0 | 1 | 2
         -----------
@@ -13,7 +13,7 @@ public class GameBoard {
         -----------
          6 | 7 | 8
 
-        Turn options
+        Turn options displayed for 3x3
 
          1 | 2 | 3
         -----------
@@ -58,14 +58,6 @@ public class GameBoard {
         if (checkForLeftDiagonalWinner() || checkForRightDiagonalWinner()) isWinner = true;
 
         return isWinner;
-    }
-
-    public boolean checkIfPositionInAcceptableRange(int position) {
-        return position > 0 && position <= GAME_BOARD.length;
-    }
-
-    public boolean checkIfPositionIsTaken(int position) {
-        return GAME_BOARD[position - 1] != Constants.AVAILABLE_POSITION_MARK;
     }
 
     public List<Integer> getAvailablePositions() {
@@ -180,6 +172,14 @@ public class GameBoard {
         if (GAME_BOARD[row] == Constants.AVAILABLE_POSITION_MARK) return false;
 
         return GAME_BOARD[row] == GAME_BOARD[row - 1] && GAME_BOARD[row] == GAME_BOARD[row - 2];
+    }
+
+    private boolean checkIfPositionInAcceptableRange(int position) {
+        return position > 0 && position <= GAME_BOARD.length;
+    }
+
+    private boolean checkIfPositionIsTaken(int position) {
+        return GAME_BOARD[position - 1] != Constants.AVAILABLE_POSITION_MARK;
     }
 
     private boolean checkIfValidPlay(int position) {
