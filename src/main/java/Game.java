@@ -17,7 +17,7 @@ public class Game {
         PLAYER_MARK = playerMark;
         AI_MARK = aiMark;
 
-        gameBoard = new GameBoard(3);
+        gameBoard = new GameBoard();
         chooseWhoGoesFirst();
 
     }
@@ -48,14 +48,14 @@ public class Game {
 
                 System.out.println(Constants.AI_TURN);
 
-                // Pause to simulate thinking
+                // Pause to simulate thinking and give player time to process action
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     // Do nothing
                 }
 
-                int position = ai.playTurn(gameBoard.getAvailablePositions());
+                int position = ai.getPlay(gameBoard.getAvailablePositions());
 
                 playTurn(position);
 

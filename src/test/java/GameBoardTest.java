@@ -20,7 +20,7 @@ class GameBoardTest {
 
     @BeforeEach
     void createGameBoard() {
-        gameBoard = new GameBoard(WIDTH);
+        gameBoard = new GameBoard();
     }
 
     @Nested
@@ -210,12 +210,6 @@ class GameBoardTest {
 
     }
 
-    @Disabled
-    @Test
-    void getBoardLength() {
-        // TODO
-    }
-
     @Nested
     @DisplayName("markBoard() method tests")
     class markBoardTests {
@@ -254,24 +248,22 @@ class GameBoardTest {
     @DisplayName("print out method tests")
     class printBoardTests {
 
-        ByteArrayOutputStream outputStream;
-        PrintStream printStream;
-        PrintStream originalOut;
+        final PrintStream stdOut = System.out;
 
+        ByteArrayOutputStream outputStream;
 
         @BeforeEach
         void setupOutputStream() {
-            outputStream = new ByteArrayOutputStream();
-            printStream = new PrintStream(outputStream);
-            originalOut = System.out;
 
-            System.setOut(printStream);
+            outputStream = new ByteArrayOutputStream();
+
+            System.setOut(new PrintStream(outputStream));
         }
 
         @AfterEach
         void restoreOutputStream() {
             System.out.flush();
-            System.setOut(originalOut);
+            System.setOut(stdOut);
         }
 
         @Test

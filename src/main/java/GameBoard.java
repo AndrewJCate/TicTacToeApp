@@ -23,11 +23,8 @@ public class GameBoard {
      */
 
     private final char[] GAME_BOARD;
-    private final int boardWidth;
 
-    public GameBoard(int boardWidth) {
-
-        this.boardWidth = boardWidth;
+    public GameBoard() {
 
         GAME_BOARD = setupNewGameBoard();
     }
@@ -72,10 +69,6 @@ public class GameBoard {
         }
 
         return availablePositions;
-    }
-
-    public int getBoardLength() {
-        return GAME_BOARD.length;
     }
 
     public boolean markBoard(int position, char mark) {
