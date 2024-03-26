@@ -20,7 +20,7 @@ class AITest {
 
         List<Integer> list = List.of(42);
 
-        assertEquals(ai.playTurn(list), 42);
+        assertEquals(ai.getPlay(list), 42);
     }
 
     @Test
@@ -28,9 +28,7 @@ class AITest {
 
         List<Integer> list = new ArrayList<>();
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            ai.playTurn(list);
-        });
+        assertThrows(IllegalArgumentException.class, () -> ai.getPlay(list));
 
     }
 
@@ -39,7 +37,7 @@ class AITest {
 
         List<Integer> list = List.of(1, 2, 4, 5);
 
-        int result = ai.playTurn(list);
+        int result = ai.getPlay(list);
 
         assertTrue(list.contains(result));
     }
