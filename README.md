@@ -76,9 +76,11 @@ You need Java installed to run the application.
 From the **command line**, enter `java –version` to see if you have Java installed on your computer. 
 
 If Java is installed, you will see something like:<br>
-`java version "17.0.5" 2022-10-18 LTS`<br>
-`Java(TM) SE Runtime Environment (build 17.0.5+9-LTS-191)`<br>
-`Java HotSpot(TM) 64-Bit Server VM (build 17.0.5+9-LTS-191, mixed mode, sharing)`
+```
+java version "17.0.5" 2022-10-18 LTS
+Java(TM) SE Runtime Environment (build 17.0.5+9-LTS-191)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.5+9-LTS-191, mixed mode, sharing)
+```
 
 Java may not be installed if you see something like:<br>
 `'java' is not recognized as an internal or external command,
