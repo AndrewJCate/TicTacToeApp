@@ -83,8 +83,10 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.5+9-LTS-191, mixed mode, sharing)
 ```
 
 Java may not be installed if you see something like:<br>
-`'java' is not recognized as an internal or external command,
-operable program or batch file.`
+```
+'java' is not recognized as an internal or external command,
+operable program or batch file.
+```
 
 You can follow the instructions [here](https://www.java.com/en/download/help/download_options.html) to download and install it.
 
